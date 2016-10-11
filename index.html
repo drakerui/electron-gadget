@@ -6,9 +6,27 @@
   </head>
   <body>
     <h1 style="background: #000; color: #fff">Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <script>
+      function getCPUs(){
+        var cpus = require("os").cpus();
+
+        document.write("<p>"+cpus[0].model+"</p>")
+
+        for(var i = 0, len = cpus.length; i < len; i++) {
+            document.write("<p><span>CPU"+i+":</span>");
+            var cpu = cpus[i], total = 0;
+
+            for(var type in cpu.times) {
+                total += cpu.times[type];
+            }
+
+            document.write("<span>"+Math.round((total - cpu.times.idle) / total * 100)+"%</span>");
+
+            document.write("</p>")
+        }
+      }
+
+      setInterval(getCPUs, 5000);
+    </script
   </body>
 </html>
